@@ -29,7 +29,7 @@ for (i = 0; i < PL; i++) {
     // console.log(planetImages[i].ID)
     var ID = planetImages[i].ID;
     locPath = './tiles/'+ID+'/{z}/{x}/{y}.png'
-    L.tileLayer(locPath, {
+    L.tileLayer(locPath, {minZoom:10,
 	maxZoom: 12}).addTo(map);
     var coords = []
         for (j=0; j < planetImages[i].coordinate[0].length-1; j++) {
