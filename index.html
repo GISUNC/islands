@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Island Planet Test</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+     <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+ integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+ crossorigin=""></script>
+ <script src="resulting.js"></script>
+</head>
+<body>
+    <h3>Planet Galapagos Folder</h3>
+    <div id="elMapa" style="height: 500px; width: 100%;"></div>
+<script>
+    var map = L.map('elMapa').setView([ -0.7937368175458215, -90.18402099609376 ], 9);
+    var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	maxZoom: 19,
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+});
+OpenStreetMap_Mapnik.addTo(map)
+var PL = planetImages.length
+for (i = 0; i < PL; i++) {
+    // console.log(planetImages[i].ID)
+    var ID = planetImages[i].ID;
+    locPath = './tiles/'+ID+'/{z}/{x}/{y}.png'
+    L.tileLayer(locPath, {
+	maxZoom: 12}).addTo(map);
+    var coords = []
+        for (j=0; j < planetImages[i].coordinate[0].length-1; j++) {
+        var latLon = [planetImages[i].coordinate[0][j][1], planetImages[i].coordinate[0][j][0]]
+        coords.push(latLon);
+    }
+    // console.log(coords)
+    L.polygon(coords).addTo(map).bindPopup(
+    "Hello island team! <br/> This image was taken on: "  
+    + planetImages[i].date + "  <br/> I could add any additional info inside this popup."
+    + "<br/> Zoom in a bit so you can also see a low resolution version of the image"
+    ).openPopup();
+}
+
+;
+
+</script>
+    
+</body>
+
+</html>
